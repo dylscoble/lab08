@@ -2,7 +2,7 @@
 title: "lab08"
 author: "Dylan Scoble"
 date: "3/10/2022"
-output: html_document
+output: pdf_document
 ---
 
 ```{r setup, include=FALSE}
@@ -11,6 +11,7 @@ library(tidyverse)
 library(nnet)
 library(knitr)
 library(broom)
+library(patchwork)
 ```
 
 ```{r}
@@ -113,4 +114,7 @@ resid <- model$residuals
 head(fitted)
 head(resid)
 ```
+
+### Exercise 12
+
 
