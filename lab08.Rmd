@@ -5,6 +5,8 @@ date: "3/10/2022"
 output: pdf_document
 ---
 
+The github repository for this assignment is at https://github.com/dylscoble/lab08
+
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
@@ -117,4 +119,55 @@ head(resid)
 
 ### Exercise 12
 
+```{r fig.width = 3, fig.height = 3}
+p1 <- arm::binnedplot(x = fitted[,1], y = resid[,1],
+                xlab = "Predicted Probabilities", 
+                ylab = "Residuals",
+                main = "About right", 
+                col.int = FALSE)
+
+p2 <- arm::binnedplot(x = fitted[,2], y = resid[,2],
+                xlab = "Predicted Probabilities", 
+                ylab = "Residuals",
+                main = "Too little", 
+                col.int = FALSE)
+
+p3 <- arm::binnedplot(x = fitted[,3], y = resid[,3],
+                xlab = "Predicted Probabilities", 
+                ylab = "Residuals",
+                main = "Too much", 
+                col.int = FALSE)
+```
+
+### Exercise 13
+
+```{r}
+aboutright_avg_resid <- mean(resid[,1])
+toolittle_avg_resid <- mean(resid[,2])
+toomuch_avg_resid <- mean(resid[,3])
+
+aboutright_avg_resid
+toolittle_avg_resid
+toomuch_avg_resid
+```
+
+# Part IV: Using the Model
+
+### Exercise 16
+
+The model tells us that the more liberal an individual is, the more their attitude towards spending on mass transportation is "Too little". Conversely, the more conservative an individual is, the more their attitude towards spending on mass transportation is "Too much". 
+
+### Exercise 17
+
+```{r}
+gss <- gss %>% 
+  mutate(pred_probs = predict(model, type = "class"))
+```
+
+```{r}
+gss %>% 
+  count(natmass, pred_probs)
+```
+
+The misclassification rate of our model is $(219 + 2 + 646 + 196 + 36) / 2590 = 0.424$
 
