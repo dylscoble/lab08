@@ -69,3 +69,48 @@ gss <- gss %>%
 # Part II: Multinomial Logistic Regression Model
 
 ### Exercise 5
+
+A multinomial logistic regression model is the best choice for this problem because our response variable, Natmass, is a categorical variable with more than two categories. Logistic regression handles classification problems and because there are three categories for our classifier, we can not use a binomial model.
+
+### Exercise 6
+
+```{r}
+model <- multinom(natmass ~ ., data = gss)
+
+tidy(model) %>% 
+  kable(format = "markdown", digits = 4)
+```
+
+### Exercise 7
+
+Because the coeficients of the of intercepts for "Too Little" and "Too Much" are both negative, this tells  us that the model will favor the more neutral baseline in its predictions.
+
+### Exercise 8
+
+The coefficient of age of “Too little” against the baseline is slightly positive. This tells  us that as an individual gets older, the odds of them thinking that mass transportation spending is too little increases.
+
+### Exercise 9
+
+The null hypothesis states that attitude towards spending on mass transportation is not affected by political views. The alternative hypothesis states that attitude towards spending on mass transportation is affected by political views. In a statistical sense, I will compare the model above to a model that does not include the polviews variable. If the reduced model has a lower AIC, then the null hypothesis holds true.
+
+```{r}
+reduced_model <- multinom(natmass ~ age + sex + sei10 + region, data = gss)
+
+reduced_model$AIC
+model$AIC
+```
+
+In conclusion, the model that includes the polviews variable has a lower AIC. Thus, the alternative hypothesis is correct. We will use the full model for the remainder of the lab.
+
+# Part III: Model Fit
+
+### Exercise 11
+
+```{r}
+fitted <- model$fitted.values
+resid <- model$residuals
+
+head(fitted)
+head(resid)
+```
+

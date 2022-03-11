@@ -229,6 +229,373 @@ ggplot(data = gss, aes(x = polviews)) +
 <h1>Part II: Multinomial Logistic Regression Model</h1>
 <div id="exercise-5" class="section level3">
 <h3>Exercise 5</h3>
+<p>A multinomial logistic regression model is the best choice for this problem because our response variable, Natmass, is a categorical variable with more than two categories. Logistic regression handles classification problems and because there are three categories for our classifier, we can not use a binomial model.</p>
+</div>
+<div id="exercise-6" class="section level3">
+<h3>Exercise 6</h3>
+<pre class="r"><code>model &lt;- multinom(natmass ~ ., data = gss)</code></pre>
+<pre><code>## # weights:  57 (36 variable)
+## initial  value 2845.405828 
+## iter  10 value 2308.054489
+## iter  20 value 2277.361046
+## iter  30 value 2276.038249
+## iter  40 value 2275.922824
+## final  value 2275.922640 
+## converged</code></pre>
+<pre class="r"><code>tidy(model) %&gt;% 
+  kable(format = &quot;markdown&quot;, digits = 4)</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left">y.level</th>
+<th align="left">term</th>
+<th align="right">estimate</th>
+<th align="right">std.error</th>
+<th align="right">statistic</th>
+<th align="right">p.value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Too little</td>
+<td align="left">(Intercept)</td>
+<td align="right">-0.4149</td>
+<td align="right">0.2584</td>
+<td align="right">-1.6058</td>
+<td align="right">0.1083</td>
+</tr>
+<tr class="even">
+<td align="left">Too little</td>
+<td align="left">age</td>
+<td align="right">0.0062</td>
+<td align="right">0.0025</td>
+<td align="right">2.4478</td>
+<td align="right">0.0144</td>
+</tr>
+<tr class="odd">
+<td align="left">Too little</td>
+<td align="left">sexMale</td>
+<td align="right">0.2174</td>
+<td align="right">0.0870</td>
+<td align="right">2.4996</td>
+<td align="right">0.0124</td>
+</tr>
+<tr class="even">
+<td align="left">Too little</td>
+<td align="left">sei10</td>
+<td align="right">0.0081</td>
+<td align="right">0.0018</td>
+<td align="right">4.4463</td>
+<td align="right">0.0000</td>
+</tr>
+<tr class="odd">
+<td align="left">Too little</td>
+<td align="left">regionE. sou. central</td>
+<td align="right">0.3339</td>
+<td align="right">0.1923</td>
+<td align="right">1.7359</td>
+<td align="right">0.0826</td>
+</tr>
+<tr class="even">
+<td align="left">Too little</td>
+<td align="left">regionMiddle atlantic</td>
+<td align="right">-0.0815</td>
+<td align="right">0.1674</td>
+<td align="right">-0.4865</td>
+<td align="right">0.6266</td>
+</tr>
+<tr class="odd">
+<td align="left">Too little</td>
+<td align="left">regionMountain</td>
+<td align="right">0.1377</td>
+<td align="right">0.1798</td>
+<td align="right">0.7658</td>
+<td align="right">0.4438</td>
+</tr>
+<tr class="even">
+<td align="left">Too little</td>
+<td align="left">regionNew england</td>
+<td align="right">0.4660</td>
+<td align="right">0.2053</td>
+<td align="right">2.2701</td>
+<td align="right">0.0232</td>
+</tr>
+<tr class="odd">
+<td align="left">Too little</td>
+<td align="left">regionPacific</td>
+<td align="right">0.3637</td>
+<td align="right">0.1539</td>
+<td align="right">2.3636</td>
+<td align="right">0.0181</td>
+</tr>
+<tr class="even">
+<td align="left">Too little</td>
+<td align="left">regionSouth atlantic</td>
+<td align="right">0.1319</td>
+<td align="right">0.1418</td>
+<td align="right">0.9296</td>
+<td align="right">0.3526</td>
+</tr>
+<tr class="odd">
+<td align="left">Too little</td>
+<td align="left">regionW. nor. central</td>
+<td align="right">0.0306</td>
+<td align="right">0.1993</td>
+<td align="right">0.1535</td>
+<td align="right">0.8780</td>
+</tr>
+<tr class="even">
+<td align="left">Too little</td>
+<td align="left">regionW. sou. central</td>
+<td align="right">-0.0275</td>
+<td align="right">0.1715</td>
+<td align="right">-0.1606</td>
+<td align="right">0.8724</td>
+</tr>
+<tr class="odd">
+<td align="left">Too little</td>
+<td align="left">polviewsLiberal</td>
+<td align="right">-0.2016</td>
+<td align="right">0.2226</td>
+<td align="right">-0.9057</td>
+<td align="right">0.3651</td>
+</tr>
+<tr class="even">
+<td align="left">Too little</td>
+<td align="left">polviewsSlightly liberal</td>
+<td align="right">-0.5969</td>
+<td align="right">0.2267</td>
+<td align="right">-2.6330</td>
+<td align="right">0.0085</td>
+</tr>
+<tr class="odd">
+<td align="left">Too little</td>
+<td align="left">polviewsModerate</td>
+<td align="right">-0.9695</td>
+<td align="right">0.2026</td>
+<td align="right">-4.7847</td>
+<td align="right">0.0000</td>
+</tr>
+<tr class="even">
+<td align="left">Too little</td>
+<td align="left">polviewsSlghtly conservative</td>
+<td align="right">-0.9400</td>
+<td align="right">0.2224</td>
+<td align="right">-4.2264</td>
+<td align="right">0.0000</td>
+</tr>
+<tr class="odd">
+<td align="left">Too little</td>
+<td align="left">polviewsConservative</td>
+<td align="right">-1.2207</td>
+<td align="right">0.2237</td>
+<td align="right">-5.4558</td>
+<td align="right">0.0000</td>
+</tr>
+<tr class="even">
+<td align="left">Too little</td>
+<td align="left">polviewsExtrmly conservative</td>
+<td align="right">-1.6962</td>
+<td align="right">0.3199</td>
+<td align="right">-5.3021</td>
+<td align="right">0.0000</td>
+</tr>
+<tr class="odd">
+<td align="left">Too much</td>
+<td align="left">(Intercept)</td>
+<td align="right">-1.8496</td>
+<td align="right">0.4356</td>
+<td align="right">-4.2463</td>
+<td align="right">0.0000</td>
+</tr>
+<tr class="even">
+<td align="left">Too much</td>
+<td align="left">age</td>
+<td align="right">0.0143</td>
+<td align="right">0.0041</td>
+<td align="right">3.4804</td>
+<td align="right">0.0005</td>
+</tr>
+<tr class="odd">
+<td align="left">Too much</td>
+<td align="left">sexMale</td>
+<td align="right">0.5349</td>
+<td align="right">0.1462</td>
+<td align="right">3.6596</td>
+<td align="right">0.0003</td>
+</tr>
+<tr class="even">
+<td align="left">Too much</td>
+<td align="left">sei10</td>
+<td align="right">-0.0099</td>
+<td align="right">0.0032</td>
+<td align="right">-3.0785</td>
+<td align="right">0.0021</td>
+</tr>
+<tr class="odd">
+<td align="left">Too much</td>
+<td align="left">regionE. sou. central</td>
+<td align="right">-0.3234</td>
+<td align="right">0.3508</td>
+<td align="right">-0.9217</td>
+<td align="right">0.3567</td>
+</tr>
+<tr class="even">
+<td align="left">Too much</td>
+<td align="left">regionMiddle atlantic</td>
+<td align="right">-0.1435</td>
+<td align="right">0.2791</td>
+<td align="right">-0.5143</td>
+<td align="right">0.6070</td>
+</tr>
+<tr class="odd">
+<td align="left">Too much</td>
+<td align="left">regionMountain</td>
+<td align="right">-0.0255</td>
+<td align="right">0.3048</td>
+<td align="right">-0.0835</td>
+<td align="right">0.9334</td>
+</tr>
+<tr class="even">
+<td align="left">Too much</td>
+<td align="left">regionNew england</td>
+<td align="right">0.8785</td>
+<td align="right">0.2922</td>
+<td align="right">3.0065</td>
+<td align="right">0.0026</td>
+</tr>
+<tr class="odd">
+<td align="left">Too much</td>
+<td align="left">regionPacific</td>
+<td align="right">0.3403</td>
+<td align="right">0.2438</td>
+<td align="right">1.3956</td>
+<td align="right">0.1628</td>
+</tr>
+<tr class="even">
+<td align="left">Too much</td>
+<td align="left">regionSouth atlantic</td>
+<td align="right">-0.2740</td>
+<td align="right">0.2428</td>
+<td align="right">-1.1283</td>
+<td align="right">0.2592</td>
+</tr>
+<tr class="odd">
+<td align="left">Too much</td>
+<td align="left">regionW. nor. central</td>
+<td align="right">0.1593</td>
+<td align="right">0.3038</td>
+<td align="right">0.5243</td>
+<td align="right">0.6001</td>
+</tr>
+<tr class="even">
+<td align="left">Too much</td>
+<td align="left">regionW. sou. central</td>
+<td align="right">-0.6018</td>
+<td align="right">0.3114</td>
+<td align="right">-1.9328</td>
+<td align="right">0.0533</td>
+</tr>
+<tr class="odd">
+<td align="left">Too much</td>
+<td align="left">polviewsLiberal</td>
+<td align="right">-0.6307</td>
+<td align="right">0.4113</td>
+<td align="right">-1.5333</td>
+<td align="right">0.1252</td>
+</tr>
+<tr class="even">
+<td align="left">Too much</td>
+<td align="left">polviewsSlightly liberal</td>
+<td align="right">-0.6699</td>
+<td align="right">0.4110</td>
+<td align="right">-1.6298</td>
+<td align="right">0.1031</td>
+</tr>
+<tr class="odd">
+<td align="left">Too much</td>
+<td align="left">polviewsModerate</td>
+<td align="right">-0.6797</td>
+<td align="right">0.3510</td>
+<td align="right">-1.9362</td>
+<td align="right">0.0528</td>
+</tr>
+<tr class="even">
+<td align="left">Too much</td>
+<td align="left">polviewsSlghtly conservative</td>
+<td align="right">-0.4011</td>
+<td align="right">0.3768</td>
+<td align="right">-1.0645</td>
+<td align="right">0.2871</td>
+</tr>
+<tr class="odd">
+<td align="left">Too much</td>
+<td align="left">polviewsConservative</td>
+<td align="right">-0.0798</td>
+<td align="right">0.3640</td>
+<td align="right">-0.2193</td>
+<td align="right">0.8264</td>
+</tr>
+<tr class="even">
+<td align="left">Too much</td>
+<td align="left">polviewsExtrmly conservative</td>
+<td align="right">-0.3064</td>
+<td align="right">0.4429</td>
+<td align="right">-0.6918</td>
+<td align="right">0.4891</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="exercise-7" class="section level3">
+<h3>Exercise 7</h3>
+<p>Because the coeficients of the of intercepts for “Too Little” and “Too Much” are both negative, this tells us that the model will favor the more neutral baseline in its predictions.</p>
+</div>
+<div id="exercise-8" class="section level3">
+<h3>Exercise 8</h3>
+<p>The coefficient of age of “Too little” against the baseline is slightly positive. This tells us that as an individual gets older, the odds of them thinking that mass transportation spending is too little increases.</p>
+</div>
+<div id="exercise-9" class="section level3">
+<h3>Exercise 9</h3>
+<p>The null hypothesis states that attitude towards spending on mass transportation is not affected by political views. The alternative hypothesis states that attitude towards spending on mass transportation is affected by political views. In a statistical sense, I will compare the model above to a model that does not include the polviews variable. If the reduced model has a lower AIC, then the null hypothesis holds true.</p>
+<pre class="r"><code>reduced_model &lt;- multinom(natmass ~ age + sex + sei10 + region, data = gss)</code></pre>
+<pre><code>## # weights:  39 (24 variable)
+## initial  value 2845.405828 
+## iter  10 value 2345.298055
+## iter  20 value 2328.421434
+## iter  30 value 2327.225660
+## final  value 2327.223281 
+## converged</code></pre>
+<pre class="r"><code>reduced_model$AIC</code></pre>
+<pre><code>## [1] 4702.447</code></pre>
+<pre class="r"><code>model$AIC</code></pre>
+<pre><code>## [1] 4623.845</code></pre>
+<p>In conclusion, the model that includes the polviews variable has a lower AIC. Thus, the alternative hypothesis is correct. We will use the full model for the remainder of the lab.</p>
+</div>
+</div>
+<div id="part-iii-model-fit" class="section level1">
+<h1>Part III: Model Fit</h1>
+<div id="exercise-11" class="section level3">
+<h3>Exercise 11</h3>
+<pre class="r"><code>fitted &lt;- model$fitted.values
+resid &lt;- model$residuals
+
+head(fitted)</code></pre>
+<pre><code>##   About right Too little   Too much
+## 1   0.3824439  0.5151564 0.10239965
+## 2   0.2715367  0.5756776 0.15278570
+## 3   0.5246593  0.3253687 0.14997198
+## 4   0.4155186  0.4653015 0.11917992
+## 5   0.4138702  0.4762595 0.10987027
+## 6   0.3142385  0.5904887 0.09527281</code></pre>
+<pre class="r"><code>head(resid)</code></pre>
+<pre><code>##   About right Too little    Too much
+## 1  -0.3824439  0.4848436 -0.10239965
+## 2  -0.2715367  0.4243224 -0.15278570
+## 3  -0.5246593 -0.3253687  0.85002802
+## 4  -0.4155186  0.5346985 -0.11917992
+## 5   0.5861298 -0.4762595 -0.10987027
+## 6  -0.3142385  0.4095113 -0.09527281</code></pre>
 </div>
 </div>
 
